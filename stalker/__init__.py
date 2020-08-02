@@ -19,9 +19,20 @@ def handler(event, context):
         codes.append(code)
         transposed[code] = ticker
 
-    response = []
-    for stocks in StocksData(codes).fetch():
-        item = transposed.get(stocks.code)
-        response.append(dict(item, value=round(stocks.value, 2), update=stocks.updated_at))
+    tickers = []
+    to_notify = []
 
-    print(json.dumps(response))
+    for stocks in StocksData(codes).fetch():
+        ticker = transposed.get(stocks.code)
+        ticker = dict(ticker, value=round(stocks.value, 2), update=stocks.updated_at)
+
+        if ticker['isBought']:
+            if ticker['value'] >= ticker['expSell']:
+                to_notify.append(ticker)
+        else:
+            if ticker['value'] <= ticker['expBuy']:
+                to_notify.append(ticker)
+
+        tickers.append(ticker)
+
+    sheet.update(dict(tickers=tickers))
