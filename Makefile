@@ -9,7 +9,7 @@ S3_BUCKET = $(AWS_S3_BUCKET)
 bundle:
 	@printf "\n----- CREATING VIRTUALENV...\n"
 	@virtualenv env && \
-		source ./env/bin/activate && \
+		. ./env/bin/activate && \
 		printf "\n----- INSTALLING DEPENDENCIES...\n" && \
 		pip install -r requirements.txt
 	@printf "\n----- BUNDLING...\n"
