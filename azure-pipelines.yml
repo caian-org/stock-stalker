@@ -16,7 +16,7 @@ jobs:
         displayName: Installing pip-related packages
         inputs:
           targetType: inline
-          script: 'pip3 install setuptools wheel virtualenv awscli'
+          script: 'pip3 install setuptools wheel'
 
       - task: Bash@3
         displayName: Installing required utils
