@@ -1,0 +1,33 @@
+trigger:
+  tags:
+    include:
+      - v*
+
+  paths:
+    exclude:
+      - README.md
+
+jobs:
+  - job: Deploy
+    pool:
+      vmImage: ubuntu-latest
+    condition: |
+      startsWith(variables['Build.SourceBranch'], 'refs/tags/v')
+
+    steps:
+      - task: Bash@3
+        displayName: Installing awscli
+        inputs:
+          targetType: inline
+          script: pip install setuptools wheel awscli
+
+      - task: Bash@3
+        displayName: Deploying Lambda
+        inputs:
+          targetType: inline
+          script: make deploy
+        env:
+          AWS_ACCESS_KEY_ID: $(aws.access_key)
+          AWS_SECRET_ACCESS_KEY: $(aws.secret_key)
+          AWS_LAMBDA_NAME: $(aws.lambda_name)
+          AWS_S3_BUCKET: $(aws.s3_bucket)
