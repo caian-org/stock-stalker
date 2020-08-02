@@ -13,10 +13,10 @@ jobs:
       vmImage: ubuntu-latest
     steps:
       - task: Bash@3
-        displayName: Installing awscli
+        displayName: Installing required utils
         inputs:
           targetType: inline
-          script: pip install setuptools wheel awscli
+          script: pip install setuptools wheel virtualenv awscli
 
       - task: Bash@3
         displayName: Deploying Lambda
