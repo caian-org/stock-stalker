@@ -13,16 +13,22 @@ jobs:
       vmImage: ubuntu-latest
     steps:
       - task: Bash@3
+        displayName: Installing pip-related packages
+        inputs:
+          targetType: inline
+          script: 'pip install setuptools wheel virtualenv awscli'
+
+      - task: Bash@3
         displayName: Installing required utils
         inputs:
           targetType: inline
-          script: pip install setuptools wheel virtualenv awscli
+          script: 'pip install virtualenv awscli --user'
 
       - task: Bash@3
         displayName: Deploying Lambda
         inputs:
           targetType: inline
-          script: make deploy
+          script: 'PATH=$PATH:$HOME/.local/bin make deploy'
         env:
           AWS_ACCESS_KEY_ID: $(aws.access_key)
           AWS_SECRET_ACCESS_KEY: $(aws.secret_key)
