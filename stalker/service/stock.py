@@ -30,7 +30,6 @@ class StocksData:
     def fetch(self):
         data_set = yf.download(
             tickers=' '.join(self.tickers),
-            #tickers='GFSA3.SA HGTX3.SA TIET11.SA AMAR3.SA PFRM3.SA',
             period='1d',
             interval='5m',
             group_by='ticker')
