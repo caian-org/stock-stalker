@@ -1,6 +1,7 @@
 import json
 import requests
 
+
 class SheetWebApp:
     def __init__(self, sheet_id, access_token):
         self.base_url = f'https://script.google.com/macros/s/{sheet_id}/exec'
