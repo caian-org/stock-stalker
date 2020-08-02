@@ -1,3 +1,5 @@
+import json
+
 from service.sheet import SheetWebApp
 from service.stock import StocksData
 from lib.env import environment as env
@@ -17,7 +19,13 @@ def handler(event, context):
         codes.append(code)
         transposed[code] = ticker
 
-    print(transposed)
+    response = []
+    for stocks in StocksData(codes).fetch():
+        item = transposed.get(stocks.code)
+        response.append(dict(item, value=round(stocks.value, 2), update=stocks.updated_at))
+
+    print(json.dumps(response))
+
 
 if __name__ == '__main__':
     handler(None, None)
