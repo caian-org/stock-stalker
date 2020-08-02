@@ -6,6 +6,8 @@ class Environment:
         self.env_values = Environment.fetch([
             Environment.add_env('SCRIPT_ID', str),
             Environment.add_env('SCRIPT_ACCESS_TOKEN', str),
+            Environment.add_env('TELEGRAM_BOT_TOKEN', str),
+            Environment.add_env('TELEGRAM_DEST_USER', str),
         ])
 
     @staticmethod
