@@ -16,13 +16,13 @@ jobs:
         displayName: Installing pip-related packages
         inputs:
           targetType: inline
-          script: 'pip install setuptools wheel virtualenv awscli'
+          script: 'pip3 install setuptools wheel virtualenv awscli'
 
       - task: Bash@3
         displayName: Installing required utils
         inputs:
           targetType: inline
-          script: 'pip install virtualenv awscli --user'
+          script: 'pip3 install virtualenv awscli --user'
 
       - task: Bash@3
         displayName: Deploying Lambda
