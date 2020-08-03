@@ -19,16 +19,10 @@ jobs:
           script: pip3 install setuptools wheel
 
       - task: Bash@3
-        displayName: Installing required utils
-        inputs:
-          targetType: inline
-          script: pip3 install virtualenv awscli --user
-
-      - task: Bash@3
         displayName: Bundling package for deployment
         inputs:
           targetType: filePath
-          filePath: ./ci/build.sh
+          filePath: ./.ci/build.sh
 
       - task: Bash@3
         displayName: Deploying

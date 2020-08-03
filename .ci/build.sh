@@ -1,7 +1,15 @@
 #!/usr/bin/env bash
 
+set -ex
+
+export PATH="$PATH:$HOME/.local/bin"
+
 DIST="dist"
 ARTIFACT="bundle.zip"
+
+# ----------------------------------------------------------------------------
+printf "\n----- INSTALLING REQUIRED UTILS...\n"
+pip3 install virtualenv awscli --user
 
 # ----------------------------------------------------------------------------
 printf "\n----- CREATING VIRTUALENV...\n"
