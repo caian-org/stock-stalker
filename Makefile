@@ -23,7 +23,7 @@ bundle:
 	@mv $(DIST)/$(ARTIFACT) .
 	@rm -rf $(DIST)
 
-deploy: bundle
+deploy:
 	@printf "\n----- UPLOADING TO S3...\n\n"
 	@aws s3 cp $(ARTIFACT) s3://$(S3_BUCKET)/$(ARTIFACT)
 	@printf "\n----- UPDATING FUNCTION CODE...\n"
