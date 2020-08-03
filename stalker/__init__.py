@@ -1,5 +1,3 @@
-import json
-
 from stalker.service.sheet import SheetWebApp
 from stalker.service.stock import StocksData
 from stalker.service.telegram import TelegramBot
