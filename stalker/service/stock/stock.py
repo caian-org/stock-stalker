@@ -1,30 +1,17 @@
+# 3rd-party
 import yfinance as yf
 
-
-class Ticker:
-    def __init__(self, code, value, updated_at):
-        self._code = code
-        self._value = value
-        self._updated_at = updated_at
-
-    @property
-    def code(self):
-        return self._code
-
-    @property
-    def value(self):
-        return self._value
-
-    @property
-    def updated_at(self):
-        return self._updated_at
+# modules
+from .ticker import Ticker
 
 
+# pylint: disable=too-few-public-methods
 class StocksData:
     def __init__(self, tickers):
         self.tickers = tickers
 
-    def _tail(self, data, key):
+    @staticmethod
+    def _tail(data, key):
         return data.at[data.index[-1], key]
 
     def fetch(self):
