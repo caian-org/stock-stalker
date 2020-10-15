@@ -1,4 +1,7 @@
+# standard
 import json
+
+# 3rd-party
 import requests
 
 
@@ -10,11 +13,13 @@ class SheetWebApp:
     @staticmethod
     def _data(res):
         if res.status_code != 200:
-            raise Exception('(SheetWebApp) Request failed. Got: {}'.format(res.content))
+            raise ConnectionError(
+                '(SheetWebApp) Request failed. Got: {}'.format(res.content)
+            )
 
         res = res.json()
         if res['status'] != 200:
-            raise Exception(
+            raise ConnectionError(
                 '(SheetWebApp) Got status {}; Response is: {}'.format(
                     res['status'], json.dumps(res['data'])
                 )
