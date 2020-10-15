@@ -7,6 +7,12 @@ trigger:
     exclude:
       - README.md
 
+
+variables:
+  distDirectoryName: dist
+  artifactFileName: bundle.zip
+
+
 jobs:
   - job: Deploy
     pool:
@@ -23,13 +29,18 @@ jobs:
         inputs:
           targetType: filePath
           filePath: ./.ci/build.sh
+        env:
+          DIST: $(distDirectoryName)
+          ARTIFACT: $(artifactFileName)
 
       - task: Bash@3
         displayName: Deploying
         inputs:
-          targetType: inline
-          script: 'PATH=$PATH:$HOME/.local/bin make deploy'
+          targetType: filePath
+          filePath: ./.ci/deploy.sh
         env:
+          DIST: $(distDirectoryName)
+          ARTIFACT: $(artifactFileName)
           AWS_DEFAULT_REGION: $(aws.region)
           AWS_ACCESS_KEY_ID: $(aws.access_key)
           AWS_SECRET_ACCESS_KEY: $(aws.secret_key)
