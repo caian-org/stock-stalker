@@ -1,12 +1,17 @@
+# modules
+from stalker.lib.config import config
+
 from stalker.service.sheet import SheetWebApp
 from stalker.service.stock import StocksData
 from stalker.service.telegram import TelegramBot
-from stalker.lib.env import environment as env
 
 
+# pylint: disable=unused-argument
 def handler(event, context):
-    sheet = SheetWebApp(env.get('SCRIPT_ID'), env.get('SCRIPT_ACCESS_TOKEN'))
-    telegram = TelegramBot(env.get('TELEGRAM_BOT_TOKEN'), env.get('TELEGRAM_DEST_USER'))
+    sheet = SheetWebApp(config.get('SCRIPT_ID'), config.get('SCRIPT_ACCESS_TOKEN'))
+    telegram = TelegramBot(
+        config.get('TELEGRAM_BOT_TOKEN'), config.get('TELEGRAM_DEST_USER')
+    )
 
     codes = []
     transposed = {}
