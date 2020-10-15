@@ -16,8 +16,11 @@ class SheetWebApp:
 
         res = res.json()
         if res['status'] != 200:
-            raise Exception('(SheetWebApp) Got status {}; Response is: {}'.format(
-                res['status'], json.dumps(res['data'])))
+            raise Exception(
+                '(SheetWebApp) Got status {}; Response is: {}'.format(
+                    res['status'], json.dumps(res['data'])
+                )
+            )
 
         return res.get('data')
 

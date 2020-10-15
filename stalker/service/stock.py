@@ -32,7 +32,8 @@ class StocksData:
             tickers=' '.join(self.tickers),
             period='1d',
             interval='5m',
-            group_by='ticker')
+            group_by='ticker',
+        )
 
         for ticker in self.tickers:
             data = data_set[ticker]

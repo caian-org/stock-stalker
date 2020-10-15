@@ -5,13 +5,8 @@ from stalker.lib.env import environment as env
 
 
 def handler(event, context):
-    sheet = SheetWebApp(
-        env.get('SCRIPT_ID'),
-        env.get('SCRIPT_ACCESS_TOKEN'))
-
-    telegram = TelegramBot(
-        env.get('TELEGRAM_BOT_TOKEN'),
-        env.get('TELEGRAM_DEST_USER'))
+    sheet = SheetWebApp(env.get('SCRIPT_ID'), env.get('SCRIPT_ACCESS_TOKEN'))
+    telegram = TelegramBot(env.get('TELEGRAM_BOT_TOKEN'), env.get('TELEGRAM_DEST_USER'))
 
     codes = []
     transposed = {}

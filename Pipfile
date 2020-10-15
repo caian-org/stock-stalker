@@ -15,6 +15,11 @@ requests = "*"
 pandas = "*"
 numpy = "*"
 
+[scripts]
+start = "python main.py"
+lint = "pylint stalker"
+standard = "black -S ./stalker"
+
 [requires]
 python_version = "3.8"
 

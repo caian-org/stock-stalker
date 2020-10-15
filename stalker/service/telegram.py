@@ -19,11 +19,10 @@ class TelegramBot:
         return str(message).replace('.', '\.')
 
     def _send(self, message):
-        res = requests.post(f'{self.base_url}/sendMessage', json={
-            'parse_mode': 'MarkdownV2',
-            'chat_id': self.user,
-            'text': message
-        })
+        res = requests.post(
+            f'{self.base_url}/sendMessage',
+            json={'parse_mode': 'MarkdownV2', 'chat_id': self.user, 'text': message},
+        )
 
         if res.status_code != 200:
             raise Exception('(TelegramBot) Request failed. Got: {}'.format(res.content))
@@ -38,7 +37,8 @@ class TelegramBot:
                 message,
                 self._sanitize(ticker['code']),
                 self._sanitize(ticker['expBuy']),
-                self._sanitize(ticker['value']))
+                self._sanitize(ticker['value']),
+            )
 
         return self._send(message)
 
@@ -50,6 +50,7 @@ class TelegramBot:
                 message,
                 self._sanitize(ticker['code']),
                 self._sanitize(ticker['expSell']),
-                self._sanitize(ticker['value']))
+                self._sanitize(ticker['value']),
+            )
 
         return self._send(message)
