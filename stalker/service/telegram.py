@@ -1,4 +1,6 @@
-# pylint: disable=W1401
+# pylint: disable=anomalous-backslash-in-string
+
+# 3rd-party
 import requests
 
 
