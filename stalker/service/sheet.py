@@ -7,10 +7,8 @@ class SheetWebApp:
         self.base_url = f'https://script.google.com/macros/s/{sheet_id}/exec'
         self.access_token = access_token
 
-    def _auth(self):
-        return {'accessToken': self.access_token}
-
-    def _data(self, res):
+    @staticmethod
+    def _data(res):
         if res.status_code != 200:
             raise Exception('(SheetWebApp) Request failed. Got: {}'.format(res.content))
 
@@ -23,6 +21,9 @@ class SheetWebApp:
             )
 
         return res.get('data')
+
+    def _auth(self):
+        return {'accessToken': self.access_token}
 
     def get_tickers(self):
         res = requests.get(self.base_url, params=self._auth())

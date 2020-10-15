@@ -15,7 +15,8 @@ class TelegramBot:
     def _chart_down_emoji(self):
         return '\U0001F4C9'
 
-    def _sanitize(self, message):
+    @staticmethod
+    def _sanitize(message):
         return str(message).replace('.', '\.')
 
     def _send(self, message):
