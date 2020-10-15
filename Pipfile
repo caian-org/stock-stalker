@@ -6,8 +6,6 @@ verify_ssl = true
 [dev-packages]
 jedi = "*"
 pylint = "*"
-watchdog = "*"
-argh = "*"
 pylint-fail-under = "*"
 black = "*"
 
