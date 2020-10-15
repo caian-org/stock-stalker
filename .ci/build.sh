@@ -1,26 +1,22 @@
 #!/usr/bin/env bash
 
 set -ex
-
 export PATH="$PATH:$HOME/.local/bin"
 
-DIST="dist"
-ARTIFACT="bundle.zip"
-
-# ----------------------------------------------------------------------------
+# ------------------------------------------------
 printf "\n----- INSTALLING REQUIRED UTILS...\n"
 pip3 install virtualenv awscli --user
 
-# ----------------------------------------------------------------------------
+# ------------------------------------------------
 printf "\n----- CREATING VIRTUALENV...\n"
 virtualenv env
 . ./env/bin/activate
 
-# ----------------------------------------------------------------------------
+# ------------------------------------------------
 printf "\n----- INSTALLING DEPENDENCIES...\n"
 pip install -r requirements.txt
 
-# ----------------------------------------------------------------------------
+# ------------------------------------------------
 printf "\n----- BUNDLING...\n"
 mkdir $DIST
 cp -rf env/lib/python3.*/site-packages/* $DIST
@@ -44,4 +40,7 @@ zip -q -r $ARTIFACT .
 
 cd ..
 mv $DIST/$ARTIFACT .
+
+# ------------------------------------------------
 rm -rf $DIST
+printf "\n----- DONE!\n"
