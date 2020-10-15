@@ -17,8 +17,9 @@ numpy = "*"
 
 [scripts]
 start = "python main.py"
-lint = "pylint stalker"
 standard = "black -S ./stalker"
+check = "black -S --check ./stalker"
+lint = "pylint-fail-under --fail_under 10.0 stalker"
 
 [requires]
 python_version = "3.8"
