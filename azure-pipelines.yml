@@ -66,7 +66,7 @@ jobs:
       - task: Bash@3
         inputs:
           targetType: inline
-          script: pip3 install --user awscli
+          script: sudo pip3 install awscli
         displayName: Install awscli
 
       - task: Bash@3
