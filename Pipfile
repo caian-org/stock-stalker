@@ -20,6 +20,7 @@ start = "python main.py"
 standard = "black -S ./stalker"
 check = "black -S --check ./stalker"
 lint = "pylint-fail-under --fail_under 10.0 stalker"
+test = "true"
 
 [requires]
 python_version = "3.8"
