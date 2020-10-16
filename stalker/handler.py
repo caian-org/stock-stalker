@@ -1,5 +1,5 @@
 # modules
-from stalker.lib.config import config
+from stalker.lib.config import config as cfg
 
 from stalker.service.sheet import SheetWebApp
 from stalker.service.stock import StocksData
@@ -8,15 +8,17 @@ from stalker.service.telegram import TelegramBot
 
 # pylint: disable=unused-argument
 def handler(event, context):
-    sheet = SheetWebApp(config.get('SCRIPT_ID'), config.get('SCRIPT_ACCESS_TOKEN'))
-    telegram = TelegramBot(
-        config.get('TELEGRAM_BOT_TOKEN'), config.get('TELEGRAM_DEST_USER')
-    )
+    sheet = SheetWebApp(cfg.get('SCRIPT_ID'), cfg.get('SCRIPT_ACCESS_TOKEN'))
+    telegram = TelegramBot(cfg.get('TELEGRAM_BOT_TOKEN'), cfg.get('TELEGRAM_DEST_USER'))
 
     codes = []
     transposed = {}
 
-    for ticker in sheet.get_tickers():
+    tickers = sheet.get_tickers()
+    if not tickers:
+        return
+
+    for ticker in tickers:
         code = ticker['code']
 
         codes.append(code)
