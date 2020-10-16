@@ -19,11 +19,15 @@ jobs:
       - template: .ci/templates/python-packages.yml
 
       - task: Bash@3
-        script: pipenv run check
+        inputs:
+          targetType: inline
+          script: pipenv run check
         displayName: Check coding style
 
       - task: Bash@3
-        script: pipenv run lint
+        inputs:
+          targetType: inline
+          script: pipenv run lint
         displayName: Check linter
 
   - job: Test
@@ -34,7 +38,9 @@ jobs:
       - template: .ci/templates/python-packages.yml
 
       - task: Bash@3
-        script: pipenv run test
+        inputs:
+          targetType: inline
+          script: pipenv run test
         displayName: Run tests
 
   - job: Deploy
@@ -58,11 +64,15 @@ jobs:
           bare: 'true'
 
       - task: Bash@3
-        script: pip3 install --user awscli
+        inputs:
+          targetType: inline
+          script: pip3 install --user awscli
         displayName: Install awscli
 
       - task: Bash@3
-        script: pipenv install
+        inputs:
+          targetType: inline
+          script: pipenv install
         displayName: Create python virtual env
         env:
           PIPENV_VENV_IN_PROJECT: 1

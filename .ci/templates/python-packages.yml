@@ -5,17 +5,27 @@ parameters:
 
 steps:
   - task: Bash@3
-    script: pip3 install setuptools wheel
+    inputs:
+      targetType: inline
+      script: pip3 install setuptools wheel
     displayName: Install pip-related packages
 
   - task: Bash@3
-    script: pip3 install pipenv
+    inputs:
+      targetType: inline
+      script: pip3 install pipenv
     displayName: Install pipenv
 
   - ${{ if and(eq(parameters.bare, 'false'), eq(parameters.onlyProd, 'true')) }}:
-    - script: pipenv install --ignore-pipfile --system --deploy
+    - task: Bash@3
+      inputs:
+        targetType: inline
+        script: pipenv install --ignore-pipfile --system --deploy
       displayName: Install production packages
 
   - ${{ if and(eq(parameters.bare, 'false'), eq(parameters.onlyProd, 'false')) }}:
-    - script: pipenv install --ignore-pipfile --system --deploy --dev
+    - task: Bash@3
+      inputs:
+        targetType: inline
+        script: pipenv install --ignore-pipfile --system --deploy --dev
       displayName: Install all packages
