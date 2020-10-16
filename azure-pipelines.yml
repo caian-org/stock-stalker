@@ -1,43 +1,86 @@
 trigger:
-  tags:
-    include:
-      - v*
-
   paths:
     exclude:
       - README.md
 
 
 variables:
+  vmImageName: ubuntu-latest
   distDirectoryName: dist
   artifactFileName: bundle.zip
 
 
 jobs:
-  - job: Deploy
+  - job: Validation
     pool:
-      vmImage: ubuntu-latest
+      vmImage: $(vmImageName)
+
     steps:
-      - task: Bash@3
-        displayName: Installing pip-related packages
-        inputs:
-          targetType: inline
-          script: pip3 install setuptools wheel
+      - template: .ci/templates/python-packages.yml
 
       - task: Bash@3
-        displayName: Bundling package for deployment
+        script: pipenv run check
+        displayName: Check coding style
+
+      - task: Bash@3
+        script: pipenv run lint
+        displayName: Check linter
+
+  - job: Test
+    pool:
+      vmImage: $(vmImageName)
+
+    steps:
+      - template: .ci/templates/python-packages.yml
+
+      - task: Bash@3
+        script: pipenv run test
+        displayName: Run tests
+
+  - job: Deploy
+    pool:
+      vmImage: $(vmImageName)
+
+    dependsOn:
+      - Validation
+      - Test
+    condition: |
+      and
+      (
+        in(dependencies.Validation.result, 'Succeeded'),
+        in(dependencies.Test.result, 'Succeeded'),
+        startsWith(variables['Build.SourceBranch'], 'refs/tags/v')
+      )
+
+    steps:
+      - template: .ci/templates/python-packages.yml
+        parameters:
+          bare: 'true'
+
+      - task: Bash@3
+        script: pip3 install --user awscli
+        displayName: Install awscli
+
+      - task: Bash@3
+        script: pipenv install
+        displayName: Create python virtual env
+        env:
+          PIPENV_VENV_IN_PROJECT: 1
+
+      - task: Bash@3
         inputs:
           targetType: filePath
-          filePath: ./.ci/build.sh
+          filePath: .ci/scripts/bundle.sh
+        displayName: Bundle package for deployment
         env:
           DIST: $(distDirectoryName)
           ARTIFACT: $(artifactFileName)
 
       - task: Bash@3
-        displayName: Deploying
         inputs:
           targetType: filePath
-          filePath: ./.ci/deploy.sh
+          filePath: .ci/scripts/deploy.sh
+        displayName: Deploy package to AWS Lambda
         env:
           DIST: $(distDirectoryName)
           ARTIFACT: $(artifactFileName)
