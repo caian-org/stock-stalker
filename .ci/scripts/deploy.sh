@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 set -ex
-export PATH="$PATH:$HOME/.local/bin"
 
 aws s3 cp "$ARTIFACT" "s3://${AWS_S3_BUCKET}/${ARTIFACT}"
 
