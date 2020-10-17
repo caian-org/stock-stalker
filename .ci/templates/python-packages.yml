@@ -7,25 +7,25 @@ steps:
   - task: Bash@3
     inputs:
       targetType: inline
-      script: sudo pip3 install setuptools wheel
+      script: pip3 install setuptools wheel
     displayName: Install pip-related packages
 
   - task: Bash@3
     inputs:
       targetType: inline
-      script: sudo pip3 install pipenv
+      script: pip3 install pipenv
     displayName: Install pipenv
 
   - ${{ if and(eq(parameters.bare, 'false'), eq(parameters.onlyProd, 'true')) }}:
     - task: Bash@3
       inputs:
         targetType: inline
-        script: sudo pipenv install --ignore-pipfile --system --deploy
+        script: python3 -m pipenv install --ignore-pipfile --system --deploy
       displayName: Install production packages
 
   - ${{ if and(eq(parameters.bare, 'false'), eq(parameters.onlyProd, 'false')) }}:
     - task: Bash@3
       inputs:
         targetType: inline
-        script: sudo pipenv install --ignore-pipfile --system --deploy --dev
+        script: python3 -m pipenv install --ignore-pipfile --system --deploy --dev
       displayName: Install all packages

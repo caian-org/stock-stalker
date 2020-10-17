@@ -16,18 +16,19 @@ jobs:
       vmImage: $(vmImageName)
 
     steps:
+      - template: .ci/templates/python-version.yml
       - template: .ci/templates/python-packages.yml
 
       - task: Bash@3
         inputs:
           targetType: inline
-          script: black -S --check ./stalker
+          script: python3 -m black -S --check stalker
         displayName: Check coding style
 
       - task: Bash@3
         inputs:
           targetType: inline
-          script: pylint-fail-under --fail_under 10.0 stalker
+          script: python3 -m pylint-fail-under --fail_under 10.0 stalker
         displayName: Check linter
 
   - job: Test
@@ -35,6 +36,7 @@ jobs:
       vmImage: $(vmImageName)
 
     steps:
+      - template: .ci/templates/python-version.yml
       - template: .ci/templates/python-packages.yml
 
       - task: Bash@3
@@ -59,6 +61,7 @@ jobs:
       )
 
     steps:
+      - template: .ci/templates/python-version.yml
       - template: .ci/templates/python-packages.yml
         parameters:
           bare: 'true'
@@ -66,13 +69,13 @@ jobs:
       - task: Bash@3
         inputs:
           targetType: inline
-          script: sudo pip3 install awscli
+          script: pip3 install awscli
         displayName: Install awscli
 
       - task: Bash@3
         inputs:
           targetType: inline
-          script: pipenv install
+          script: python3 -m pipenv install
         displayName: Create python virtual env
         env:
           PIPENV_VENV_IN_PROJECT: 1
