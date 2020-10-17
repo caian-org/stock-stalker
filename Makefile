@@ -42,4 +42,4 @@ deploy:
 	@python3 -m awscli lambda update-function-code \
 		--function-name "${AWS_LAMBDA_NAME}" \
 		--s3-bucket "${AWS_S3_BUCKET}" \
-		--s3-key "${ARTIFACT}"
+		--s3-key "${ARTIFACT}" >/dev/null
