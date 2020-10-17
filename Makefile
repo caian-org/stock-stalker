@@ -29,8 +29,8 @@ bundle:
 		rm -rf pandas numpy pip setuptools wheel && \
 		curl "$(NUMPY_WHL)" --output numpy.whl && \
 		curl "$(PANDAS_WHL)" --output pandas.whl && \
-		unzip -o numpy.whl && \
-		unzip -o pandas.whl && \
+		unzip -q -o numpy.whl && \
+		unzip -q -o pandas.whl && \
 		rm -r ./*.dist-info ./*.whl ./*.virtualenv __pycache__ && \
 		zip -q -r "${ARTIFACT}" . && \
 		cd ..
@@ -38,8 +38,8 @@ bundle:
 	@rm -rf "${DIST}"
 
 deploy:
-	@python3 -m aws s3 cp "${ARTIFACT}" "s3://${AWS_S3_BUCKET}/${ARTIFACT}"
-	@python3 -m aws lambda update-function-code \
+	@python3 -m awscli s3 cp "${ARTIFACT}" "s3://${AWS_S3_BUCKET}/${ARTIFACT}"
+	@python3 -m awscli lambda update-function-code \
 		--function-name "${AWS_LAMBDA_NAME}" \
 		--s3-bucket "${AWS_S3_BUCKET}" \
 		--s3-key "${ARTIFACT}"
