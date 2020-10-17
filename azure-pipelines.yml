@@ -7,6 +7,11 @@ trigger:
     include:
       - v*
 
+  branches:
+    include:
+      - master
+      - dev
+
 
 variables:
   vmImageName: ubuntu-latest
