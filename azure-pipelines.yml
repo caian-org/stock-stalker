@@ -15,8 +15,8 @@ trigger:
 
 variables:
   vmImageName: ubuntu-latest
-  distDirectoryName: dist
-  artifactFileName: bundle.zip
+  DIST: dist
+  ARTIFACT: bundle.zip
 
 
 jobs:
@@ -57,7 +57,6 @@ jobs:
   - job: Deploy
     pool:
       vmImage: $(vmImageName)
-
     dependsOn:
       - Validation
       - Test
@@ -92,9 +91,6 @@ jobs:
           targetType: inline
           script: make bundle
         displayName: Bundle package for deployment
-        env:
-          DIST: $(distDirectoryName)
-          ARTIFACT: $(artifactFileName)
 
       - task: Bash@3
         inputs:
@@ -102,8 +98,6 @@ jobs:
           script: make deploy
         displayName: Deploy package to AWS Lambda
         env:
-          DIST: $(distDirectoryName)
-          ARTIFACT: $(artifactFileName)
           AWS_DEFAULT_REGION: $(aws.region)
           AWS_ACCESS_KEY_ID: $(aws.access_key)
           AWS_SECRET_ACCESS_KEY: $(aws.secret_key)
