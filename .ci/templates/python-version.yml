@@ -3,4 +3,4 @@ steps:
     inputs:
       versionSpec: '3.8'
       addToPath: true
-    displayName: Set version to python 3.8
+    displayName: Set python version to 3.8
