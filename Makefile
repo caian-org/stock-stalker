@@ -11,6 +11,7 @@ check:
 lint:
 	@python3 -m pylint_fail_under \
 		--disable=missing-module-docstring \
+		--disable=missing-class-docstring \
 		--disable=missing-function-docstring \
 		--fail_under 10.0 stalker
 
