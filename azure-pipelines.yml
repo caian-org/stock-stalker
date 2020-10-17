@@ -3,6 +3,10 @@ trigger:
     exclude:
       - README.md
 
+  tags:
+    include:
+      - v*
+
 
 variables:
   vmImageName: ubuntu-latest
