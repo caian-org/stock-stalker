@@ -22,13 +22,13 @@ jobs:
       - task: Bash@3
         inputs:
           targetType: inline
-          script: python3 -m black -S --check stalker
+          script: make check
         displayName: Check coding style
 
       - task: Bash@3
         inputs:
           targetType: inline
-          script: python3 -m pylint_fail_under --fail_under 10.0 stalker
+          script: make lint
         displayName: Check linter
 
   - job: Test
@@ -42,7 +42,7 @@ jobs:
       - task: Bash@3
         inputs:
           targetType: inline
-          script: 'true'
+          script: make test
         displayName: Run tests
 
   - job: Deploy
@@ -75,15 +75,13 @@ jobs:
       - task: Bash@3
         inputs:
           targetType: inline
-          script: python3 -m pipenv install
+          script: make venv
         displayName: Create python virtual env
-        env:
-          PIPENV_VENV_IN_PROJECT: 1
 
       - task: Bash@3
         inputs:
-          targetType: filePath
-          filePath: .ci/scripts/bundle.sh
+          targetType: inline
+          script: make bundle
         displayName: Bundle package for deployment
         env:
           DIST: $(distDirectoryName)
@@ -91,8 +89,8 @@ jobs:
 
       - task: Bash@3
         inputs:
-          targetType: filePath
-          filePath: .ci/scripts/deploy.sh
+          targetType: inline
+          script: make deploy
         displayName: Deploy package to AWS Lambda
         env:
           DIST: $(distDirectoryName)
