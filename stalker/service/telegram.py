@@ -17,6 +17,10 @@ class TelegramBot:
     def _chart_down_emoji(self):
         return '\U0001F4C9'
 
+    @property
+    def _robot_emoji(self):
+        return '\U0001f916'
+
     @staticmethod
     def _sanitize(message):
         return str(message).replace('.', '\.')
@@ -31,6 +35,15 @@ class TelegramBot:
             raise Exception('(TelegramBot) Request failed. Got: {}'.format(res.content))
 
         return res.json()
+
+    def notify_alert(self):
+        message = (
+            self._robot_emoji
+            + ' __Notification from Stocks Stalker__ '
+            + self._robot_emoji
+        )
+
+        return self._send(message)
 
     def notify_buy(self, tickers):
         message = self._chart_down_emoji + ' *TIME TO BUY*\!\n\n'

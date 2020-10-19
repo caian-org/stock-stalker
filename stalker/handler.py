@@ -42,6 +42,9 @@ def handler(event, context):
 
     sheet.update(dict(tickers=tickers))
 
+    if to_notify['buy'] or to_notify['sell']:
+        telegram.notify_alert()
+
     if to_notify['buy']:
         telegram.notify_buy(to_notify['buy'])
 
