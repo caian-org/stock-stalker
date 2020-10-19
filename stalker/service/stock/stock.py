@@ -23,7 +23,10 @@ class StocksData:
         )
 
         for ticker in self.tickers:
-            data = data_set[ticker]
+            if len(self.tickers) > 1:
+                data = data_set[ticker]
+            else:
+                data = data_set
 
             close_value = data.at[data.index[-1], 'Close']
             updated_at = data.index[-1].strftime('%Y-%m-%d %H:%M:%S')
