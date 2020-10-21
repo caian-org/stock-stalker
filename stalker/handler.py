@@ -8,13 +8,17 @@ from stalker.service.telegram import TelegramBot
 
 # pylint: disable=unused-argument
 def handler(event, context):
-    sheet = SheetWebApp(cfg.get('SCRIPT_ID'), cfg.get('SCRIPT_ACCESS_TOKEN'))
+    sheet = SheetWebApp(
+        cfg.get('SCRIPT_ID'), cfg.get('SCRIPT_ACCESS_TOKEN'), bool(cfg.get('IS_DEBUG'))
+    )
+
     telegram = TelegramBot(cfg.get('TELEGRAM_BOT_TOKEN'), cfg.get('TELEGRAM_DEST_USER'))
 
     codes = []
     transposed = {}
 
-    tickers = sheet.get_tickers()
+    response = sheet.get_tickers()
+    tickers = response['content']
     if not tickers:
         return
 
