@@ -35,6 +35,11 @@ class Config:
 
     @staticmethod
     def _parse_bool(data):
+        try:
+            data = data.lower()
+        except AttributeError:
+            return None
+
         if data == 'true':
             return True
         if data == 'false':
