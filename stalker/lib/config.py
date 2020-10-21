@@ -12,6 +12,8 @@ class Config:
                 self._add_env('SCRIPT_ACCESS_TOKEN', str),
                 self._add_env('TELEGRAM_BOT_TOKEN', str),
                 self._add_env('TELEGRAM_DEST_USER', str),
+                # not required
+                self._add_env('IS_DEBUG', str, True),
             ]
         )
 
