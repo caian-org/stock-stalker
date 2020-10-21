@@ -1,4 +1,5 @@
 # 3rd-party
+import numpy
 import yfinance as yf
 
 # modules
@@ -30,5 +31,8 @@ class StocksData:
 
             close_value = data.at[data.index[-1], 'Close']
             updated_at = data.index[-1].strftime('%Y-%m-%d %H:%M:%S')
+
+            if numpy.isnan(close_value):
+                continue
 
             yield Ticker(ticker, close_value, updated_at)
