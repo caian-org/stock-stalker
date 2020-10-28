@@ -18,5 +18,9 @@ numpy = "*"
 [requires]
 python_version = "3.8"
 
+[scripts]
+lint = "pylint ./stalker"
+standard = "black -S ./stalker"
+
 [pipenv]
 allow_prereleases = true
