@@ -29,8 +29,11 @@ class StocksData:
             else:
                 data = data_set
 
-            close_value = data.at[data.index[-1], 'Close']
-            updated_at = data.index[-1].strftime('%Y-%m-%d %H:%M:%S')
+            try:
+                close_value = data.at[data.index[-1], 'Close']
+                updated_at = data.index[-1].strftime('%Y-%m-%d %H:%M:%S')
+            except KeyError:
+                continue
 
             if numpy.isnan(close_value):
                 continue
