@@ -29,7 +29,8 @@ def handler(event, context):
         transposed[code] = ticker
 
     tickers = []
-    to_notify = {'buy': [], 'sell': []}
+    to_buy = []
+    to_sell = []
 
     for stocks in StocksData(codes).fetch():
         ticker = transposed.get(stocks.code)
@@ -37,20 +38,20 @@ def handler(event, context):
 
         if ticker['isBought']:
             if ticker['value'] >= ticker['expSell']:
-                to_notify['sell'].append(ticker)
+                to_sell.append(ticker)
         else:
             if ticker['value'] <= ticker['expBuy']:
-                to_notify['buy'].append(ticker)
+                to_buy.append(ticker)
 
         tickers.append(ticker)
 
     sheet.update(dict(tickers=tickers))
 
-    if to_notify['buy'] or to_notify['sell']:
+    if to_buy or to_sell:
         telegram.notify_alert()
 
-    if to_notify['buy']:
-        telegram.notify_buy(to_notify['buy'])
+        if to_buy:
+            telegram.notify_buy(to_buy)
 
-    if to_notify['sell']:
-        telegram.notify_sell(to_notify['sell'])
+        if to_sell:
+            telegram.notify_sell(to_sell)
