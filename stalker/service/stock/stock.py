@@ -11,10 +11,6 @@ class StocksData:
     def __init__(self, tickers):
         self.tickers = tickers
 
-    @staticmethod
-    def _tail(data, key):
-        return data.at[data.index[-1], key]
-
     def fetch(self):
         data_set = yf.download(
             tickers=' '.join(self.tickers),
